@@ -16,7 +16,7 @@ You will need 3 things to add a coin to track
 2. Coin ID
 3. Select the currency you want to show, the option are currenlty "usd", "eur", "gbp", "cad", "aud", "jpy", "btc", "eth"
 
-Once selcted you can save and the sensor will be avaibale in Homeassistant.
+Once selected you can save and the sensor will be avaibale in Homeassistant.
 
 
 ![alt text](image.png)
