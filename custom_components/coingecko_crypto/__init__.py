@@ -1,5 +1,4 @@
 import logging
-import requests
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
@@ -11,6 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONF_API_KEY = "api_key"
 CONF_COIN = "coin"
+CONF_CURRENCY = "currency"
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -18,6 +18,7 @@ CONFIG_SCHEMA = vol.Schema(
             {
                 vol.Required(CONF_API_KEY): cv.string,
                 vol.Required(CONF_COIN): cv.string,
+                vol.Required(CONF_CURRENCY): cv.string,
             }
         )
     },
@@ -34,7 +35,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up CoinGecko from a config entry."""
     hass.data.setdefault(DOMAIN, {})
     
-    # Corrected method
     await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
     
     return True
