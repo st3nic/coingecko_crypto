@@ -33,5 +33,8 @@ async def async_setup(hass: HomeAssistant, config: dict):
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up CoinGecko from a config entry."""
     hass.data.setdefault(DOMAIN, {})
-    hass.config_entries.async_setup_platforms(entry, ["sensor"])
+    
+    # Corrected method
+    await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
+    
     return True
