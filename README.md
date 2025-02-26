@@ -1,4 +1,6 @@
-# coingecko_crypto
+![alt text](Square.png)
+
+
 Home Assistant Integration for HACS to use the Public CoinGecko API
 
 Firstly you will need to signup for a demo api account(This is free and no credit card info is required to sign up)
@@ -18,3 +20,8 @@ You will need 3 things to add a coin to track
 3. Select the currency you want to show, the option are currenlty "usd", "eur", "gbp", "cad", "aud", "jpy", "btc", "eth"
 
 Once selcted you can save and the sensor will be avaibale in Homeassistant.
+
+
+Powered by CoinGecko API
+
+
