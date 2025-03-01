@@ -18,7 +18,9 @@ You will need 3 things to add a coin to track
 
 ![alt text](<add sensor.png>)
 
-Once selected you can save and the sensor will be avaibale in Homeassistant.
+Once selected you can save and the sensor will be available in Homeassistant.
+
+Attributes currently supported are 24H High and 24H Low
 
 ![alt text](image.png)
 

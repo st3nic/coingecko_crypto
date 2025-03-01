@@ -6,7 +6,7 @@ from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
-COINGECKO_API_URL = "https://api.coingecko.com/api/v3/simple/price"
+COINGECKO_API_URL = "https://api.coingecko.com/api/v3/coins/"
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
     """Set up CoinGecko sensor."""
@@ -24,6 +24,8 @@ class CoinGeckoSensor(Entity):
         self._coin = coin
         self._currency = currency
         self._state = None
+        self._24hLow = None
+        self._24hHigh = None
 
     @property
     def name(self):
@@ -40,12 +42,22 @@ class CoinGeckoSensor(Entity):
         """Return the selected currency."""
         return self._currency.upper()
 
+    @property
+    def extra_state_attributes(self):
+        """Return additional attributes."""
+        return {
+            "high_24h": self._24hHigh,
+            "low_24h": self._24hLow,
+        }
+
     def update(self):
         """Fetch new state data for the sensor."""
         try:
-            response = requests.get(f"{COINGECKO_API_URL}?ids={self._coin}&vs_currencies={self._currency}")
+            response = requests.get(f"{COINGECKO_API_URL}{self._coin}")
             response.raise_for_status()
             data = response.json()
-            self._state = data.get(self._coin, {}).get(self._currency, "N/A")
+            self._state = data['market_data']['current_price'][self._currency]
+            self._24hLow = data['market_data']['low_24h'][self._currency]
+            self._24hHigh = data['market_data']['high_24h'][self._currency]
         except Exception as e:
             _LOGGER.error(f"Error fetching CoinGecko data: {e}")
