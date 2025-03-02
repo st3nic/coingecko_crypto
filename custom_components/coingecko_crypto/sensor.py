@@ -26,6 +26,13 @@ class CoinGeckoSensor(Entity):
         self._state = None
         self._24hLow = None
         self._24hHigh = None
+        self._price_change_percentage_24h = None
+        self._price_change_percentage_7d = None
+        self._price_change_percentage_14d = None
+        self._price_change_percentage_30d = None
+        self._price_change_percentage_60d = None
+        self._price_change_percentage_200d = None
+        self._price_change_percentage_1y = None
 
     @property
     def name(self):
@@ -48,6 +55,12 @@ class CoinGeckoSensor(Entity):
         return {
             "high_24h": self._24hHigh,
             "low_24h": self._24hLow,
+            "price_change_percentage_7d" : self._price_change_percentage_7d,
+            "price_change_percentage_14d" : self._price_change_percentage_14d,
+            "price_change_percentage_30d" : self._price_change_percentage_30d,
+            "price_change_percentage_60d" : self._price_change_percentage_60d,
+            "price_change_percentage_200d" : self._price_change_percentage_200d,
+            "price_change_percentage_1y" : self._price_change_percentage_1y
         }
 
     def update(self):
@@ -59,5 +72,11 @@ class CoinGeckoSensor(Entity):
             self._state = data['market_data']['current_price'][self._currency]
             self._24hLow = data['market_data']['low_24h'][self._currency]
             self._24hHigh = data['market_data']['high_24h'][self._currency]
+            self._price_change_percentage_7d = data['market_data']['price_change_percentage_7d']
+            self._price_change_percentage_14d = data['market_data']['price_change_percentage_14d']
+            self._price_change_percentage_30d = data['market_data']['price_change_percentage_30d']
+            self._price_change_percentage_60d = data['market_data']['price_change_percentage_60d']
+            self._price_change_percentage_200d = data['market_data']['price_change_percentage_200d']
+            self._price_change_percentage_1y = data['market_data']['price_change_percentage_1y']
         except Exception as e:
             _LOGGER.error(f"Error fetching CoinGecko data: {e}")

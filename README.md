@@ -20,7 +20,7 @@ You will need 3 things to add a coin to track
 
 Once selected you can save and the sensor will be available in Homeassistant.
 
-Attributes currently supported are 24H High and 24H Low
+Attributes currently supported are 24H High,24H Low,percentage change 7d,percentage change 14d,percentage change 30d,percentage change 60d,percentage change 200d,percentage change 1y
 
 ![alt text](image.png)
 
