@@ -69,7 +69,7 @@ class CoinGeckoSensor(Entity):
             response = requests.get(f"{COINGECKO_API_URL}{self._coin}")
             response.raise_for_status()
             data = response.json()
-            self._state = data['market_data']['current_price'][self._currency]
+            self._state = f"{data['market_data']['current_price'][self._currency]:.2f}"
             self._24hLow = data['market_data']['low_24h'][self._currency]
             self._24hHigh = data['market_data']['high_24h'][self._currency]
             self._price_change_percentage_7d = data['market_data']['price_change_percentage_7d']
