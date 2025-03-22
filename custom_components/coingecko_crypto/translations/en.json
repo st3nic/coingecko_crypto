@@ -1,0 +1,13 @@
+{
+    "config": {
+      "step": {
+        "menu": {
+          "title": "Select Configuration Type",
+          "menu_options": {
+            "crypto": "Cryptocurrency",
+            "nft": "NFT"
+          }
+        }
+      }
+    }
+  }

@@ -1,22 +1,32 @@
 Home Assistant Integration for HACS to use the Public CoinGecko API
 
+** WARNING Breaking changes from V1 with adding suport for NFT's **
+
 Firstly you will need to signup for a demo api account(This is free and no credit card info is required to sign up)
 
 https://www.coingecko.com/en/api/pricing
 
-Once signed up and you have generated and API Key you will need to select the coin id you want to track, use the developer test page to find the ID easily using your API key
+Once signed up and you have generated an API Key you will need to select the coin or NFT id you want to track, use the developer test page to find the ID easily using your API key
 
 https://docs.coingecko.com/reference/coins-list
 
-Once you have the Coin ID you can add this repo as a custom repo in Hacs, after the repo has been added you install as a custom integration and follow the setup task.
+You can also track NFT's listed at the below address
 
-You will need 3 things to add a coin to track
+https://docs.coingecko.com/v3.0.1/reference/nfts-list
 
-1. API Key
-2. Coin ID
-3. Select the currency you want to show, the options are currently "usd", "eur", "gbp", "cad", "aud", "jpy", "btc", "eth"
+Add this repo to HACS then restart Home Assistant, Search for the integration in the available integrations and click add.
+
+Select which type of entity you would like to add.
+
+![alt text](<select type.png>)
+
+If adding a coin you will then see the below image when you need to enter your API key, coin id and select which currency you would like to use.
 
 ![alt text](<add sensor.png>)
+
+If adding an NFT you will see the below image where you need to add your API key and enter the NFT id.
+
+![alt text](<add nft.png>)
 
 Once selected you can save and the sensor will be avaibale in Homeassistant.
 

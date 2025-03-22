@@ -11,6 +11,8 @@ _LOGGER = logging.getLogger(__name__)
 CONF_API_KEY = "api_key"
 CONF_COIN = "coin"
 CONF_CURRENCY = "currency"
+CONF_NFT_ID = "nft_id"  # Changed from nft_collection to nft_id
+CONF_CURRENCY_NFT = "currency" #added a second currency.
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -19,6 +21,8 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_API_KEY): cv.string,
                 vol.Required(CONF_COIN): cv.string,
                 vol.Required(CONF_CURRENCY): cv.string,
+                vol.Optional(CONF_NFT_ID): cv.string,
+                vol.Optional(CONF_CURRENCY_NFT): cv.string,
             }
         )
     },
@@ -34,7 +38,5 @@ async def async_setup(hass: HomeAssistant, config: dict):
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up CoinGecko from a config entry."""
     hass.data.setdefault(DOMAIN, {})
-    
     await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
-    
     return True
