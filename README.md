@@ -24,11 +24,9 @@ If adding a coin you will then see the below image when you need to enter your A
 
 ![alt text](<add sensor.png>)
 
-If adding an NFT you will see the below image where you need to add your API key and enter the NFT id.
+Once selected you can save and the sensor will be available in Homeassistant.
 
-![alt text](<add nft.png>)
-
-Once selected you can save and the sensor will be avaibale in Homeassistant.
+Attributes currently supported are 24H High,24H Low,percentage change 7d,percentage change 14d,percentage change 30d,percentage change 60d,percentage change 200d,percentage change 1y
 
 ![alt text](image.png)
 

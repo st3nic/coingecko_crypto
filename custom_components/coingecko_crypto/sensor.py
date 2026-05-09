@@ -7,7 +7,13 @@ from homeassistant.core import HomeAssistant
 _LOGGER = logging.getLogger(__name__)
 
 COINGECKO_API_URL = "https://api.coingecko.com/api/v3/coins/"
-COINGECKO_NFT_API_URL = "https://api.coingecko.com/api/v3/nfts/"
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
+    """Set up CoinGecko sensor."""
+    api_key = entry.data["api_key"]
+    coin = entry.data["coin"]
+    currency = entry.data["currency"]
+    async_add_entities([CoinGeckoSensor(api_key, coin, currency)], True)
 
 class CoinGeckoSensor(Entity):
     """Representation of a CoinGecko sensor."""
@@ -41,6 +47,7 @@ class CoinGeckoSensor(Entity):
 
     @property
     def extra_state_attributes(self):
+        """Return additional attributes."""
         return {
             "high_24h": self._24hHigh,
             "low_24h": self._24hLow,
