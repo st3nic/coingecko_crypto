@@ -18,11 +18,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_e
 class CoinGeckoSensor(Entity):
     """Representation of a CoinGecko sensor."""
 
-    def __init__(self, api_key, coin, currency):
-        """Initialize the sensor."""
-        self._api_key = api_key
-        self._coin = coin
-        self._currency = currency
+    def __init__(self, config):
+        self._api_key = config["api_key"]
+        self._coin = config["coin"]
+        self._currency = config["currency"]
         self._state = None
         self._24hLow = None
         self._24hHigh = None
@@ -36,17 +35,14 @@ class CoinGeckoSensor(Entity):
 
     @property
     def name(self):
-        """Return the name of the sensor."""
         return f"{self._coin.capitalize()} Price in {self._currency.upper()}"
 
     @property
     def state(self):
-        """Return the state of the sensor."""
         return self._state
 
     @property
     def unit_of_measurement(self):
-        """Return the selected currency."""
         return self._currency.upper()
 
     @property
@@ -64,7 +60,6 @@ class CoinGeckoSensor(Entity):
         }
 
     def update(self):
-        """Fetch new state data for the sensor."""
         try:
             response = requests.get(f"{COINGECKO_API_URL}{self._coin}")
             response.raise_for_status()
@@ -80,3 +75,48 @@ class CoinGeckoSensor(Entity):
             self._price_change_percentage_1y = data['market_data']['price_change_percentage_1y']
         except Exception as e:
             _LOGGER.error(f"Error fetching CoinGecko data: {e}")
+
+class NFTSensor(Entity):
+    """Representation of an NFT sensor using CoinGecko NFT data."""
+    def __init__(self, config):
+        self._api_key = config["api_key"]
+        self._nft_id = config["nft_id"]
+        self._state = None
+        self._floor_price = None
+        self._volume_24h = None
+
+    @property
+    def name(self):
+        return f"{self._nft_id.capitalize()} (Native Currency)"
+
+    @property
+    def state(self):
+        return self._state
+
+    @property
+    def extra_state_attributes(self):
+        return {
+            "floor_price": self._floor_price,
+            "volume_24h": self._volume_24h,
+        }
+
+    def update(self):
+        try:
+            response = requests.get(f"{COINGECKO_NFT_API_URL}{self._nft_id}")
+            response.raise_for_status()
+            data = response.json()
+
+            #Coin gecko nft api, data structure changes between NFT's. Handle this.
+            self._state = f"{data['floor_price']['native_currency']:.2f}"
+            self._floor_price = data['floor_price']['native_currency']
+            self._volume_24h = data['volume_24h']['native_currency']
+
+        except Exception as e:
+            _LOGGER.error(f"Error fetching CoinGecko NFT data: {e}")
+
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
+    """Set up CoinGecko and NFT sensors."""
+    if entry.data["type"] == "crypto":
+        async_add_entities([CoinGeckoSensor(entry.data)], True)
+    elif entry.data["type"] == "nft":
+        async_add_entities([NFTSensor(entry.data)], True)
